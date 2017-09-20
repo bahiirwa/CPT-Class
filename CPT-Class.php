@@ -7,17 +7,27 @@
 
  class CptClass
  {
+     /**
+      * Add variables to make them dynamic from user.
+      * Are private to make sure they are applied to one class alone.
+      */
+
      private $singular;
      private $plural;
      private $menu_icon;
      private $menu_position;
 
+     /**
+      * Add the variables into the class.
+      * Run all the needed actions on class instantiation.
+      */
      public function __construct( $singular, $plural, $menu_icon, $menu_position )
      {
         $this->singular = $singular;
         $this->plural = $plural;
         $this->menu_icon = $menu_icon;
         $this->menu_position = $menu_position;
+
         add_action( 'init', array( &$this, 'custom_post_type'), 10 , 4 );
         add_action( 'after_switch_theme', array( &$this, 'rewrite_flush') );
      }
