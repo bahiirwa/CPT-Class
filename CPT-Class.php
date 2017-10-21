@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WordPress Custom Post Type Class written OOP Style.
+ * Basic WordPress Custom Post Type Class written OOP Style.
  * @package CptClass
  */
 
@@ -16,17 +16,19 @@
      private $plural;
      private $menu_icon;
      private $menu_position;
+     private $text_domain;
 
      /**
       * Add the variables into the class.
       * Run all the needed actions on class instantiation.
       */
-     public function __construct( $singular, $plural, $menu_icon, $menu_position )
+     public function __construct( $singular, $plural, $menu_icon, $menu_position, $text_domain )
      {
         $this->singular = $singular;
         $this->plural = $plural;
         $this->menu_icon = $menu_icon;
         $this->menu_position = $menu_position;
+        $this->text_domain = $text_domain;
 
         add_action( 'init', array( &$this, 'custom_post_type'), 10 , 4 );
         add_action( 'after_switch_theme', array( &$this, 'rewrite_flush') );
@@ -64,14 +66,15 @@
          'show_in_menu'       => true,
          'menu_icon'          => $this->menu_icon,
          'query_var'          => true,
-         'rewrite'            => array( 'slug' => strtolower( $this->singular ) ),
+         'rewrite'            => array( 'slug' => strtolower( $this->plural ) ),
          'capability_type'    => 'post',
          'has_archive'        => true,
          'hierarchical'       => false,
          'menu_position'      => $this->menu_position, // below post
-         'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+         'supports'           => array( 'title', 'editor', 'thumbnail' /*, 'excerpt', 'author', 'comments'*/ )
        );
-       register_post_type( strtolower( $this->singular ), $args );
+       
+       register_post_type( strtolower( $this->plural ), $args );
 
      }
 
