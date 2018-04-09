@@ -40,10 +40,10 @@
      public function custom_post_type()
      {
        $labels = array(
-         'name'               => _x( $this->plural, 'post type general name', 'awps' ),
-         'singular_name'      => _x( $singular, 'post type singular name', 'awps' ),
-         'menu_name'          => _x( $this->plural, 'admin menu', 'awps' ),
-         'name_admin_bar'     => _x( $this->singular, 'add new on admin bar', 'awps' ),
+         'name'               => _x( $this->plural, 'post type general name', $this->$text_domain ),
+         'singular_name'      => _x( $singular, 'post type singular name', $this->$text_domain ),
+         'menu_name'          => _x( $this->plural, 'admin menu', $this->$text_domain ),
+         'name_admin_bar'     => _x( $this->singular, 'add new on admin bar', $this->$text_domain ),
          'add_new'            => _x( 'Add New ' . $this->singular, ' awps' ),
          'add_new_item'       => __( 'Add New ' . $this->singular, ' awps' ),
          'new_item'           => __( 'New ' . $this->singular, ' awps' ),
@@ -53,13 +53,13 @@
          'all_items'          => __( 'All ' . $this->plural, ' awps' ),
          'search_items'       => __( 'Search' . $this->plural, ' awps' ),
          'parent_item_colon'  => __( 'Parent ' . $this->plural, ' awps' ),
-         'not_found'          => __( 'No ' . $this->plural . ' found.', 'awps' ),
-         'not_found_in_trash' => __( 'No ' . $this->plural . ' found in Trash.', 'awps' )
+         'not_found'          => __( 'No ' . $this->plural . ' found.', $this->$text_domain ),
+         'not_found_in_trash' => __( 'No ' . $this->plural . ' found in Trash.', $this->$text_domain )
        );
 
        $args = array(
          'labels'             => $labels,
-         'description'        => __( 'Description.', 'awps' ),
+         'description'        => __( 'Description.', $this->$text_domain ),
          'public'             => true,
          'publicly_queryable' => true,
          'show_ui'            => true,
