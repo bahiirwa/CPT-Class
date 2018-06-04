@@ -6,25 +6,25 @@ WordPress Custom Post Type Class written OOP Style.
 * Add code after import of class
 * Simply add more arrays of the arguments to make more CPTs;
 ```
-  /**
- * TODO: Need to fix the $supports array()
+ /**
+ * TODO: Need to fix the $supports array() to work properly in class - multidimensional arrays :-(
  */ 
 $customPosts = array (
 	array(
-		'singular' 		=> 'Artist', 
-		'plural' 		=> 'Artists', 
-		'menu_icon'		=> 'dashicons-user', 
+		'singular' => 'Artist', 
+		'plural' => 'Artists', 
+		'menu_icon' => 'dashicons-user', 
 		'menu_position' => 18, 
-		'text_domain' 	=> 'text-domain',
-		'supports'		=> array( 'title', /*'editor', 'thumbnail' , 'excerpt', 'author', 'comments'*/ )
+		'text_domain' => 'text-domain',
+		'supports' => array( 'title', /*'editor', 'thumbnail' , 'excerpt', 'author', 'comments'*/ )
 	),
 	array(
-		'singular' 		=> 'Location', 
-		'plural' 		=> 'Locations', 
-		'menu_icon'		=> 'dashicons-book-alt', 
+		'singular' => 'Location', 
+		'plural'  => 'Locations', 
+		'menu_icon' => 'dashicons-book-alt', 
 		'menu_position' => 18, 
-		'text_domain' 	=> 'text-domain',
-		'supports'		=> array( 'title', 'editor', 'thumbnail' , 'excerpt', 'author', /*'comments'*/ )
+		'text_domain' => 'text-domain',
+		'supports' => array( 'title', 'editor', 'thumbnail' , 'excerpt', 'author', /*'comments'*/ )
 	)
 );
 
@@ -39,5 +39,6 @@ foreach ( $customPosts as $customPost ) {
 
 # Improvements to make
 1. Better implementation of the instantiating class. Not proper OOP to use `_construct` class like that.
+1. Need to fix the $supports array() to work properly in class - multidimensional arrays :-(
 1. Make more options
 1. Better Documentation
