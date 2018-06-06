@@ -1,59 +1,77 @@
 <?php
+
 /**
- * CPT Taxonomy Custom Meta
- * To apply use add Taxonomy Name, Singular CPT Name
- * e.g. $customTaxClass = new custom_taxonomy_class( 'Genre', 'Book' );
+ * Still in Development
+ * 
  */
-class custom_taxonomy_class
+
+ 
+/**
+ * 
+ * Custom
+ * use it to write your custom functions.
+ */
+class CustomMeta
 {
+	/**
+    * Add variables to make them dynamic from user.
+    * Are private to make sure they are applied to one class alone.
+    */
+    private $post_type;
+    private $post_id;
+    private $box_id;
+    private $box_title;
 
- private $taxo_name;
- private $CPT_name;
- private $textdomain;
+  /**
+    * Add the variables into the class.
+    * Run all the needed actions on class instantiation.
+    */
+    public function __construct( $post_type, $post_id, $box_id, $box_title )
+    {
+        $this->post_type    = $post_type;
+        $this->$post_id     = $post_id;
+        $this->$box_id      = $box_id;
+        $this->box_title    = $box_title;
 
- public function __construct( $taxo_name, $CPT_name, $textdomain )
- {
-    $this->taxo_name = $taxo_name;
-    $this->CPT_name = strtolower( $CPT_name );
-    $this->taxo_name = $textdomain;
+        /*--------Designation Metabox----- */
+        add_action( 'add_meta_boxes', 'register_custom_box' );
+        /*------ Saves the value for the box content---------- */
+        add_action( 'save_post', 'custom_box_save_postdata' );
+    }
 
-    add_action( 'init', array($this, 'register_custom_fields_taxonomy'), 0 );
+  /**
+    * Create Custom Post Types
+    * @return The registered post type object, or an error object
+    */
+    public function register_custom_box() {
+        $screens = array( 'post', $this->post_type );
+        foreach ( $screens as $screen ) {
+            add_meta_box(
+                $this->$box_id . '_id',            // Unique ID 'custom_box_id'
+                $this->box_title,      // Box title
+                'custom_box',  // Content callback
+                $screen                      // post type
+            );
+        }
+    }
 
- }
+    /*---------- Prints the box content------------------ */
+    public function custom_box() 
+    {
+    ?>
+        <!--<label for="myplugin_field">staff"s Website Link</label>-->
+        <input name="<php echo $this->$box_id . '_field'; ?>" id="<php echo $this->$box_id . '_field'; ?>" class="widefat" 
+        value="<?php echo get_post_meta( $this->$post_id, $this->box_ID . '_meta_value_key', true ); ?>" />
+        <?php
+    }
 
- public function register_custom_fields_taxonomy() {
+    public function custom_box_save_postdata() {
+        if ( array_key_exists($this->box_ID . '_field', $_POST ) ) {
+            update_post_meta( $post_id,
+            $this->box_ID . '_meta_value_key',
+                $_POST[$this->box_ID . '_field']
+            );
+        }
+    }
 
-     $labels = array(
-       'name' => _x( $this->taxo_name . ' Categories', 'taxonomy general name', $this->textdomain ),
-       'singular_name' => _x( $this->taxo_name . ' Category', 'taxonomy singular name', $this->textdomain ),
-       'search_items' =>  __( 'Search ' . $this->taxo_name . ' Categories', $this->textdomain ),
-       'all_items' => __( 'All ' . $this->taxo_name . ' Categories', $this->textdomain ),
-       'parent_item' => __( 'Parent ' . $this->taxo_name . ' Category', $this->textdomain ),
-       'parent_item_colon' => __( 'Parent ' . $this->taxo_name . ' Category:', $this->textdomain ),
-       'edit_item' => __( 'Edit ' . $this->taxo_name . ' Category', $this->textdomain ),
-       'update_item' => __( 'Update ' . $this->taxo_name . ' Category', $this->textdomain ),
-       'add_new_item' => __( 'Add New ' . $this->taxo_name . ' Category', $this->textdomain ),
-       'new_item_name' => __( 'New ' . $this->taxo_name . ' Category Name', $this->textdomain ),
-       'menu_name' => __( $this->taxo_name . ' Categories', $this->textdomain ),
-     );
-
-   // Now register the taxonomy
-
-     register_taxonomy(
-         $this->CPT_name . '_categories',
-         $this->CPT_name, //CPT name
-         array(
-               'hierarchical' => true,
-               'labels' => $labels,
-               'show_ui' => true,
-               'show_admin_column' => true,
-               'query_var' => true,
-               'rewrite' => array(
-                   'slug' => $this->CPT_name . '_categories'
-               ),
-           )
-     );
-
-   } //end register_custom_fields_taxonomy()
-
-} //End Class
+}
