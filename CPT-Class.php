@@ -72,7 +72,8 @@
         'has_archive'        => true,
         'hierarchical'       => false,
         'menu_position'      => $this->menu_position, // below post
-        'supports'           => $this->$supports
+        'supports'           => $this->$supports,
+        'show_in_rest'       => true
       );
       register_post_type( strtolower( $this->plural ), $args );
     }
