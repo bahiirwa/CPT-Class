@@ -4,21 +4,19 @@
  * Basic WordPress Custom Post Type Class written OOP Style.
  * @package CptClass
  */
+class CptClass {
+    /**
+     * Add variables to make them dynamic from user.
+     * Are private to make sure they are applied to one class alone.
+     */
+    public $singular;
+    public $plural;
+    public $menu_icon;
+    public $menu_position;
+    public $text_domain;
+    public $supports;
 
- class CptClass
- {
-     /**
-    * Add variables to make them dynamic from user.
-    * Are private to make sure they are applied to one class alone.
-    */
-    private $singular;
-    private $plural;
-    private $menu_icon;
-    private $menu_position;
-    private $text_domain;
-    private $supports;
-
-  /**
+   /**
     * Add the variables into the class.
     * Run all the needed actions on class instantiation.
     */
@@ -43,7 +41,7 @@
     {
       $labels = array(
         'name'               => _x( $this->plural, 'post type general name', $this->text_domain ),
-        'singular_name'      => _x( $singular, 'post type singular name', $this->text_domain ),
+        'singular_name'      => _x( $this->singular, 'post type singular name', $this->text_domain ),
         'menu_name'          => _x( $this->plural, 'admin menu', $this->text_domain ),
         'name_admin_bar'     => _x( $this->singular, 'add new on admin bar', $this->text_domain ),
         'add_new'            => _x( 'Add New ' . $this->singular, ' awps' ),
@@ -72,7 +70,7 @@
         'has_archive'        => true,
         'hierarchical'       => false,
         'menu_position'      => $this->menu_position, // below post
-        'supports'           => $this->$supports,
+        'supports'           => $this->supports,
         'show_in_rest'       => true
       );
       register_post_type( strtolower( $this->plural ), $args );
@@ -89,4 +87,4 @@
         // Flush the rewrite rules only on theme activation
         flush_rewrite_rules();
     }
- }
+}
