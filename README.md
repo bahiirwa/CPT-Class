@@ -5,8 +5,7 @@ WordPress Custom Post Type Class written OOP Style with REST API support.
 # How to use
 
 - Import the CPT-Class.php file into your theme directory such as `require get_template_directory() . '/inc/Custom/Custom.php';`
-- Add code after import of class
-- Simply add more arrays of the arguments to make more CPTs;
+- Add the code below after import of class. Simply add more arrays of the arguments to make more CPTs;
 
 ```
  /**
@@ -33,7 +32,7 @@ $customPosts = array (
 
 
 foreach ( $customPosts as $customPost ) {
-	new Custom( $customPost['singular'], $customPost['plural'], $customPost['menu_icon'], $customPost['menu_position'], $customPost['text_domain'], $customPost['supports'] );
+	new CptClass( $customPost['singular'], $customPost['plural'], $customPost['menu_icon'], $customPost['menu_position'], $customPost['text_domain'], $customPost['supports'] );
 }
 ```
 
@@ -41,7 +40,7 @@ foreach ( $customPosts as $customPost ) {
 
 # Improvements to make
 
-1.  Better implementation of the instantiating class. Not proper OOP to use `_construct` class like that.
-1.  Need to fix the $supports array() to work properly in class - multidimensional arrays :-(
-1.  Make more options
-1.  Better Documentation
+- [ ] Better implementation of the instantiating class. Not proper OOP to use `_construct` class like that.
+- [ ] Need to fix the $supports array() to work properly in class - multidimensional arrays :-(
+- [ ] Make more options
+- [ ] Better Documentation
